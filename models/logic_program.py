@@ -9,6 +9,13 @@ from utils import OpenAIModel
 import argparse
 from prompt_library import few_shot_protoqa_prompt, few_shot_proofwriter_prompt
 from prompt_library import few_shot_folio_prompt_fol, few_shot_logical_deduction_prompt
+import random
+import datetime
+
+seed = 2024
+
+# dongwei code
+random.seed(seed)
 
 class LogicProgramGenerator:
     def __init__(self, args):
@@ -89,14 +96,17 @@ class LogicProgramGenerator:
     '''
     Updated version of logic_program_generation; speed up the generation process by batching
     '''
-    def batch_logic_program_generation(self, batch_size = 10):
+    def batch_logic_program_generation(self, batch_size = 1):
         # load raw dataset
         raw_dataset = self.load_raw_dataset(self.split)
         print(f"Loaded {len(raw_dataset)} examples from {self.split} split.")
 
+        raw_dataset = random.sample(raw_dataset, 100)
+
         outputs = []
         # split dataset into chunks
-        dataset_chunks = [raw_dataset[i:i + batch_size] for i in range(0, len(raw_dataset), batch_size)]
+        # dataset_chunks = [raw_dataset[i:i + batch_size] for i in range(0, len(raw_dataset), batch_size)]
+        dataset_chunks = [raw_dataset[60: 100]]
         for chunk in tqdm(dataset_chunks):
             # create prompt
             full_prompts = [self.prompt_creator[self.dataset_name](example) for example in chunk]
@@ -135,8 +145,8 @@ class LogicProgramGenerator:
         # save outputs
         if not os.path.exists(os.path.join(self.save_path, self.interpreter)):
             os.makedirs(os.path.join(self.save_path, self.interpreter))
-        
-        with open(os.path.join(self.save_path, self.interpreter, f'{self.dataset_name}_{self.split}_{self.model_name}.json'), 'w') as f:
+        timestamp = datetime.datetime.now().strftime('%Y_%b_%d_%H_%M_%S')
+        with open(os.path.join(self.save_path, self.interpreter, f'{self.dataset_name}_{self.split}_{self.model_name}_{timestamp}.json'), 'w') as f:
             json.dump(outputs, f, indent=2, ensure_ascii=False)
 
 def parse_args():

@@ -118,11 +118,14 @@ class PykeLogicInferenceEngine(LogicInferenceEngine):
         with engine.prove_goal(f'facts.{predicate_name}({subject_name}, $label)') as gen:
             for vars, plan in gen:
                 results.append(vars['label'])
+        print("facts result length: " + str(len(results)))
 
         with engine.prove_goal(f'rules.{predicate_name}({subject_name}, $label)') as gen:
             for vars, plan in gen:
                 results.append(vars['label'])
+        print("rules result length: " + str(len(results)))
 
+        print(results)
         if len(results) == 1:
             return results[0]
         elif len(results) == 2:
@@ -154,12 +157,17 @@ class PykeLogicInferenceEngine(LogicInferenceEngine):
             print('removing compiled_krb')
             os.system(f'rm -rf ./compiled_krb/*')
 
+        # if ID == "ProofWriter_RelNoneg-OWA-D5-775_Q9":
+        if ID == "ProofWriter_RelNoneg-OWA-D5-745_Q5":
+            print("AB")
         engine = knowledge_engine.engine(os.path.join(self.pyke_data_path, self.dataset_name, ID))
         engine.activate('rules')
         engine.get_kb('facts')
 
         # parse the logic query into pyke query
         predicate, subject, value_to_check = self.parse_query(logic_program.Query[0])
+        # dongwei code
+        print("query parsed!")
         result = self.check_specific_predicate(subject, predicate, engine)
         answer = self.answer_map[self.dataset_name](result, value_to_check)
         return answer
@@ -344,7 +352,7 @@ def parse_args():
     parser.add_argument('--model_name', type=str, default='text-davinci-003')
     parser.add_argument('--self_debug', action='store_true')
     parser.add_argument('--debug_api_key', type=str)
-    parser.add_argument('--timeout', type=int, default=60)
+    parser.add_argument('--timeout', type=int, default=6000)
     args = parser.parse_args()
     return args
 

@@ -66,7 +66,9 @@ def evaluate_QA(result_file):
 
     total_em = 0.0
     count = 0
-    for sample in QA_results:
+    for i in range(len(QA_results)):
+        print(f"Question {i}: ")
+        sample = QA_results[i]
         gold_answer = sample['answer'].replace('(', '').replace(')', '').strip()
         answer_str = sample['predicted_answer'].strip() if sample['predicted_answer'] is not None else ''
         prediction = get_choice(answer_str)

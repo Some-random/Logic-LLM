@@ -1,0 +1,73 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "logic_program.py",
+            "type": "python",
+            "request": "launch",
+            "program": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/models/logic_program.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--api_key",
+                "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",
+                "--model_name",
+                "gpt-4",
+                "--dataset_name",
+                "ProofWriter",
+                "--split",
+                "dev",
+                "--interpreter",
+                "pyke"
+            ],
+            "cwd": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/models",
+            "justMyCode": false
+        },
+        {
+            "name": "gpt3_baseline.py",
+            "type": "python",
+            "request": "launch",
+            "program": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/baselines/gpt3_baseline.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--api_key",
+                "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",
+                "--model_name",
+                "gpt-4",
+                "--dataset_name",
+                "ProofWriter",
+                "--split",
+                "dev",
+                "--mode",
+                "Direct",
+                "--max_new_tokens",
+                "16"
+            ],
+            "cwd": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/baselines",
+            "justMyCode": false
+        },
+        {
+            "name": "logic_inference.py",
+            "type": "python",
+            "request": "launch",
+            "program": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/models/logic_inference.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--model_name",
+                "gpt-4",
+                "--interpreter",
+                "pyke",
+                "--dataset_name",
+                "ProofWriter",
+                "--split",
+                "dev",
+                "--save_path",
+                "./results"
+            ],
+            "cwd": "/bask/projects/j/jlxi8926-auto-sum/dongwei/Logic-LLM/models",
+            "justMyCode": false
+        }
+    ]
+}
